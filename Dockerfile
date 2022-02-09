@@ -20,7 +20,6 @@ libmariadb-dev
 
 COPY requirements.txt .
 
-RUN pip install --upgrade pip
 # pipでrequirements.txtに指定されているパッケージを追加する
 RUN pip install -r requirements.txt
 
