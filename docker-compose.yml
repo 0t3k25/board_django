@@ -4,23 +4,24 @@ services:
   #コンテナ1
   python:
       container_name: django_docker
+      #M1
+      platform: linux/amd64
       build: .
       command: python manage.py runserver 0.0.0.0:8000
-      working_dir: /app
+      working_dir: /app/board_django
       ports:
         - 8000:8000
       volumes:
         - .:/app
       depends_on:
-        - mysql
+        - mariadb
+      expose:
+        - '8000'
   #コンテナ2
-  mysql:
-      container_name: mysql
-      #M1
-      platform: linux/x86_64 
-      image: mysql:8.0
+  mariadb:
+      container_name: mariadb
+      image: mariadb:10.4
       restart: always
-      command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
       environment:
         MYSQL_DATABASE: django
         MYSQL_USER: django
@@ -30,4 +31,4 @@ services:
       ports:
         - "3306:3306"
       volumes:
-        - ./mysql:/var/lib/mysql
+        - ./mariadb:/var/lib/mysql
